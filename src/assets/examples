@@ -1,0 +1,41 @@
+<div class="form">    
+  <div class="row">
+<input class="name" label="Name"></input>
+<input class="email" label="E mail"></input>
+</div>
+<select class="select" label="Location" options="Asturias,Barcelona,Madrid,Murcia,Valencia"></select>
+<textarea class="textarea" label="Comments"></textarea>
+<radio class="radio" label="Are you familiar with CSS Grid?" options="Yes,No"></radio>
+<checkbox class="checkbox" label="Receive our newsletter?"></checkbox>
+<div class="buttons">
+<button class="button" type="primary" label="Send Response"></button>
+<button class="button" type="secondary" label="Clear Form"></button>
+</div>
+</div>
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .rowa {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .name {
+    flex: 1;
+  }
+  
+  .email {
+    flex: 2;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
