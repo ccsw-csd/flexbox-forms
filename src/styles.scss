@@ -163,14 +163,6 @@ body {
   100% { transform: translate3d(-50px, 105vh, 0) rotateX(10deg) rotateY(250deg); }
 }
 
-.container {
-  width: 100vw;
-  height: 100vh;
-  background: #ffffff;
-  border:1px solid white;
-  display:fixed;
-  top:0px;
-}
 
 .confetti-container {
   perspective: 700px;

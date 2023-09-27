@@ -127,6 +127,13 @@ export class AppComponent implements OnInit {
     return this.storageObject['level-'+(levelNumber)+'-'+'code'];
   }
 
+  private hasNextLevel() : boolean  {
+    let filter = LEVELS.filter(item => item.id == this.levelNumber+1);
+    if (!filter || filter.length != 1) return false;
+
+    return true;
+  }
+
   public nextLevel(isFinished : boolean) : void {
     let filter = LEVELS.filter(item => item.id == this.levelNumber+1);
     if (!filter || filter.length != 1) return;
@@ -176,6 +183,7 @@ export class AppComponent implements OnInit {
 
     let style = `<style>
     `+this.codeModelCss.value+`
+    .hack-class {}
     .example {
       `+this.actualLevel?.templateStyle+`
     }
@@ -198,11 +206,9 @@ export class AppComponent implements OnInit {
     if (this.allItemsAreIdenticalPosition()) {
       this.isFinished = true;
 
-      if (!this.checkLevelStored(this.levelNumber+1)) this.isLastLevel = true;
-
+      if (this.hasNextLevel() == false) this.isLastLevel = true;
       return;
     }
-
 
   }
 
