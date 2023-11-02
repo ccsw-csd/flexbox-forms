@@ -204,7 +204,7 @@ export class AppComponent implements OnInit {
 }
 </style>`;
 
-    let code = this.htmlUtils.decodeCode('<div style="flex:1">'+this.codeModelHtml.value+'</div>');
+    let code = this.htmlUtils.decodeCode(this.codeModelHtml.value);
 
     this.sanitizedBoardCode = this.sanitizer.bypassSecurityTrustHtml(code);
     this.sanitizedBoardStyle = this.sanitizer.bypassSecurityTrustHtml(style);
