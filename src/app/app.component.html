@@ -31,7 +31,7 @@
       <div style="display: block; flex: 1; box-sizing: border-box; padding: 2rem; border-radius: 1rem; background-color: hsl(0, 0%, 100%); border: 4px solid hsl(0, 0%, 90%);">
         <div [innerHtml]="sanitizedBoardStyle" style="display: none;"></div>
         <div [innerHtml]="sanitizedBoardCodeExample" class="example" style="position: absolute; width: calc(50vw - 10rem - 8px); display: flex; flex-direction: row; flex: 1; opacity: .1; pointer-events: none;"></div>
-        <div [innerHtml]="sanitizedBoardCode" style="position: absolute; width: calc(50% - 10rem - 8px); display: flex; flex-direction: row; flex: 1;"></div>
+        <div id="boardCode" [innerHtml]="sanitizedBoardCode" style="position: absolute; width: calc(50% - 10rem - 8px); display: flex; flex-direction: row; flex: 1;"></div>
         <div *ngIf="isFinished" style="position: absolute; width: calc(50% - 10rem - 8px); display: flex; flex-direction: column; flex: 1; height: 80%">
           <ng-particles style="height: 100%" [id]="'tsparticles'" [options]="particlesOptions" [particlesInit]="particlesInit"></ng-particles>          
           <div *ngIf="isLastLevel == false" style="position: absolute; top: 40%; align-items: center; width: 100%; display: flex; flex-direction: column;">

@@ -170,6 +170,7 @@ export class AppComponent implements OnInit {
     if (this.storageObject[key+'css']) css = this.storageObject[key+'css'];
     if (this.storageObject[key+'code']) code = this.storageObject[key+'code'];
 
+
     this.codeModelCss.value = css;
     this.codeModelHtml.value = code
 
@@ -177,19 +178,33 @@ export class AppComponent implements OnInit {
     this.change();
   }
 
-  
+  private transformCss(value : string) {
+
+    let splitStyles = value.trim().split("}");
+
+    value = '';
+    for (let i = 0; i < splitStyles.length; i++) {
+      
+      if (splitStyles[i].indexOf('{') > 0) {        
+        value += '#boardCode ' + splitStyles[i].trim() + '\n}\n\n';
+      }
+    };
+
+    return value;
+  }
 
   private change(): void {
 
-    let style = `<style>
-    `+this.codeModelCss.value+`
-    .hack-class {}
-    .example {
-      `+this.actualLevel?.templateStyle+`
-    }
-    </style>`;
+    let modelCss = this.transformCss(this.codeModelCss.value);
 
-    let code = this.htmlUtils.decodeCode(this.codeModelHtml.value);
+    let style = `<style>
+`+modelCss+`
+.example {
+  `+this.actualLevel?.templateStyle+`
+}
+</style>`;
+
+    let code = this.htmlUtils.decodeCode('<div style="flex:1">'+this.codeModelHtml.value+'</div>');
 
     this.sanitizedBoardCode = this.sanitizer.bypassSecurityTrustHtml(code);
     this.sanitizedBoardStyle = this.sanitizer.bypassSecurityTrustHtml(style);
@@ -222,18 +237,42 @@ export class AppComponent implements OnInit {
       if (list == null) return false;
       if (list.length != 2) return false;
 
-      let positionOne = list[0].getBoundingClientRect();
-      let positionTwo = list[1].getBoundingClientRect();
-
-      if (positionOne.x != positionTwo.x) return false;
-      if (positionOne.y != positionTwo.y) return false;
-      if (positionOne.width != positionTwo.width) return false;
-      if (positionOne.height != positionTwo.height) return false;
+      if (this.checkItemAndChildsAreIdenticalPosition(list[0], list[1]) == false) return false;
     }
     
     return true;
   }
 
+  private checkItemAndChildsAreIdenticalPosition(elementOne : Element, elementTwo: Element) : boolean {
+
+    if (elementOne.childElementCount != elementTwo.childElementCount) return false;
+
+    for (let i = 0; i < elementOne.childElementCount; i++) {
+
+      if (this.checkItemAreIdenticalPosition(elementOne.children[i], elementTwo.children[i]) == false) return false;
+
+    }
+
+    return true;
+
+  }
+
+
+  private checkItemAreIdenticalPosition(elementOne : Element, elementTwo: Element) : boolean {
+    
+    let positionOne = elementOne.getBoundingClientRect();
+    let positionTwo = elementTwo.getBoundingClientRect();
+    
+    if (positionOne.x != positionTwo.x) return false;
+    if (positionOne.y != positionTwo.y) return false;
+
+    if (elementOne.tagName != 'LABEL') {
+      if (positionOne.width != positionTwo.width) return false;
+      if (positionOne.height != positionTwo.height) return false;
+    }
+
+    return true;
+  }
 
 
   
